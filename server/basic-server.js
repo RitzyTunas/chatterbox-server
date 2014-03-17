@@ -20,7 +20,8 @@ we could have called it anything (myServer, blahblah, etc.). The function we pas
 will, unsurprisingly, handle all incoming requests. (ps: 'handleRequest' is in the 'request-handler' file).
 Lastly, we tell the server we made to listen on the given port and IP. */
 
-var server = http.createServer(handleRequest);
+var requestHandler = require('./request-handler.js');
+var server = http.createServer(requestHandler.handleRequest);
 console.log("Listening on http://" + ip + ":" + port);
 server.listen(port, ip);
 
@@ -28,7 +29,7 @@ server.listen(port, ip);
      node basic-server.js
  *  on the command line.
 
- * To connect to the server, load http://127.0.0.1:8080 in your web
+ * To connect to the server, load http://127.0.0.1:3000 in your web
  * browser.
 
  * server.listen() will continue running as long as there is the
