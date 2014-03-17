@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chatterbox</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="../bower_components/jquery/jquery.min.js"></script>
+    <script src="../bower_components/underscore/underscore.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/app.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <h1>chatterbox</h1>
+      <input class="chatInput"></input>
+      <button class="inputButton">send</button>
+      <input type="text" list="rooms" class="roomParent" placeholder="select room" />
+      <datalist id="rooms" class="rooms">
+      </datalist>
+      <div class="messageContainer">
+      </div>
+    </div>
+  </body>
+</html>
