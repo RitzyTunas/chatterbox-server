@@ -54,7 +54,7 @@ exports.handleRequest = function(request, response) {
 
     request.on("end", function() {
         // console.log(data);
-        messageStorage.results.push(JSON.parse(data));
+        messageStorage.results.unshift(JSON.parse(data));
         console.log(messageStorage.results);
     });
 

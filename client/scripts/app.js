@@ -30,7 +30,7 @@ app.fetch = function(roomName) {
     contentType: 'application/json',
     success: function (data) {
       data = JSON.parse(data);
-      console.log(data, data.results);
+      // console.log(data, data.results);
       var messages = data.results;
       $('.messageContainer li').remove();
       for(var i = 0; i < messages.length; i++){
