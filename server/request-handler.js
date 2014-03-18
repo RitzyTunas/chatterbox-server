@@ -11,7 +11,7 @@
 var messageStorage = {
   results: []
 };
-
+// exports = {}
 exports.handleRequest = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
   request - such as what URL the browser is requesting. */
@@ -21,18 +21,22 @@ exports.handleRequest = function(request, response) {
   // console.log("request/response: ", request.headers, response.headers);
 
 
-
-
-
   console.log("Serving request type " + request.method + " for url " + request.url);
 
-  var statusCode = 200;
 
   /* Without this line, this server wouldn't work. See the note
    * below about CORS. */
   var headers = defaultCorsHeaders;
 
   headers['Content-Type'] = "text/plain";
+
+  if ((request.url).match(/\/classes/gi) === null) {
+    var statusCode = 404;
+    /* .writeHead() tells our server what HTTP status code to send back */
+    response.writeHead(statusCode, headers);
+    response.end('File not found!');
+  } else if(request.method === "POST") {
+    var statusCode = 201;
 
   /* .writeHead() tells our server what HTTP status code to send back */
   response.writeHead(statusCode, headers);
@@ -42,10 +46,6 @@ exports.handleRequest = function(request, response) {
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
 
-
-
-
-  if(request.method === "POST") {
     var data = "";
 
     request.on("data", function(chunk) {
@@ -59,7 +59,18 @@ exports.handleRequest = function(request, response) {
     });
 
     response.end();
+
   } else if(request.method === "GET") {
+    var statusCode = 200;
+
+    /* .writeHead() tells our server what HTTP status code to send back */
+    response.writeHead(statusCode, headers);
+
+    /* Make sure to always call response.end() - Node will not send
+     * anything back to the client until you do. The string you pass to
+     * response.end() will be the body of the response - i.e. what shows
+     * up in the browser.*/
+
     //  response.writeHead(200);
     // var message = "";
     // message += messageStorage;
@@ -68,8 +79,22 @@ exports.handleRequest = function(request, response) {
     // response.end();
   // return messageStorage;
   } else {
+    var statusCode = 200;
+
+    /* .writeHead() tells our server what HTTP status code to send back */
+    response.writeHead(statusCode, headers);
+
+    /* Make sure to always call response.end() - Node will not send
+     * anything back to the client until you do. The string you pass to
+     * response.end() will be the body of the response - i.e. what shows
+     * up in the browser.*/
+
+
     response.end("Hello, World!");
-  };
+  }
+
+
+
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
@@ -83,3 +108,5 @@ var defaultCorsHeaders = {
   "access-control-allow-headers": "content-type, accept",
   "access-control-max-age": 10 // Seconds.
 };
+exports.handler = exports.handleRequest;
+

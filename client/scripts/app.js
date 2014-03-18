@@ -2,7 +2,7 @@ var app = window.app;
 app = {};
 
 app.init = function(){
-  app.server = 'http://127.0.0.1:3000/1/classes/messages/';
+  app.server = 'http://127.0.0.1:3000/classes/';
   app.url = decodeURI(document.URL);
   app.username = (app.url.slice(app.url.indexOf('=') + 1)).toString();
   app.roomName = undefined;

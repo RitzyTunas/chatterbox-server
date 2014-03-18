@@ -21,7 +21,7 @@ will, unsurprisingly, handle all incoming requests. (ps: 'handleRequest' is in t
 Lastly, we tell the server we made to listen on the given port and IP. */
 
 var requestHandler = require('./request-handler.js');
-var server = http.createServer(requestHandler.handleRequest);
+var server = http.createServer(requestHandler.handler);
 console.log("Listening on http://" + ip + ":" + port);
 server.listen(port, ip);
 
