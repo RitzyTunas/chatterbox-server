@@ -8,7 +8,9 @@
 //var handleRequest;
 
 
-var allMessages = {};
+var messageStorage = {
+  results: []
+};
 
 exports.handleRequest = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
@@ -18,23 +20,8 @@ exports.handleRequest = function(request, response) {
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
   // console.log("request/response: ", request.headers, response.headers);
 
-  if(request.method === "POST") {
-      var data = "";
 
-      request.on("data", function(chunk) {
-          data += chunk;
-      });
 
-      request.on("end", function() {
-          console.log(data);
-
-          // util.log("raw: " + data);
-
-          // var json = qs.parse(data);
-
-          // util.log("json: " + json);
-      });
-  }
 
 
   console.log("Serving request type " + request.method + " for url " + request.url);
@@ -54,7 +41,35 @@ exports.handleRequest = function(request, response) {
    * anything back to the client until you do. The string you pass to
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
-  response.end("Hello, World!");
+
+
+
+
+  if(request.method === "POST") {
+    var data = "";
+
+    request.on("data", function(chunk) {
+        data += chunk;
+    });
+
+    request.on("end", function() {
+        // console.log(data);
+        messageStorage.results.push(JSON.parse(data));
+        console.log(messageStorage.results);
+    });
+
+    response.end();
+  } else if(request.method === "GET") {
+    //  response.writeHead(200);
+    // var message = "";
+    // message += messageStorage;
+    response.end(JSON.stringify(messageStorage));
+    // console.log(messageStorage);
+    // response.end();
+  // return messageStorage;
+  } else {
+    response.end("Hello, World!");
+  };
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).

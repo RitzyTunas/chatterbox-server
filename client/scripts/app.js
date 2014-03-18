@@ -25,10 +25,12 @@ app.init = function(){
 app.fetch = function(roomName) {
   $.ajax({
     url: app.server,
-    data: {order: '-createdAt'},
+    // data: {order: '-createdAt'},
     type: 'GET',
     contentType: 'application/json',
     success: function (data) {
+      data = JSON.parse(data);
+      console.log(data, data.results);
       var messages = data.results;
       $('.messageContainer li').remove();
       for(var i = 0; i < messages.length; i++){
@@ -40,6 +42,7 @@ app.fetch = function(roomName) {
       }
     },
     error: function (data) {
+      // console.log(data);
       console.error('chatterbox: Failed to retrieve message');
     }
   });
@@ -59,6 +62,7 @@ app.send = function (messageObj) {
     url: app.server,
     type: 'POST',
     data: JSON.stringify(messageObj),
+    // data: messageObj,
     contentType: 'application/json',
     success: function (data) {},
     error: function (data) {
@@ -74,9 +78,9 @@ app.addFriend = function(newFriend) {
 app.roomChecker = function(){
   $.ajax({
     url: app.server,
-    data: {order: '-createdAt'},
+    // data: {order: '-createdAt'},
     type: 'GET',
-    contentType: 'application/json',
+    contentType: 'jsonp',
     success: function (data) {
       var messages = data.results;
       app.rooms = {};
